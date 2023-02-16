@@ -1,0 +1,6 @@
+{
+   "includeShadowDom": true,
+   "chromeWebSecurity": true,
+   "viewportHeight": 1500,
+   "viewPortWidth": 1500
+}
