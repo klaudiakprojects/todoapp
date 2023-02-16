@@ -7,7 +7,7 @@ import todoApp from "../support/page-object/pom"
 describe("E2E - Todo App", () => {
 
     beforeEach(() => {
-        cy.visit("http://127.0.0.1:5500/index.html")
+        cy.visit("https://klaudiakprojects.github.io/todoapp/")
     })
 
     it("Should add one task", () => {
