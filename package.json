@@ -16,5 +16,10 @@
   "license": "ISC",
   "devDependencies": {
     "cypress": "^9.5.1"
+  },
+  "dependencies": {
+    "knex": "^2.4.2",
+    "mysql2": "^3.1.2",
+    "objection": "^3.0.1"
   }
 }

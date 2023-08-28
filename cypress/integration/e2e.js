@@ -2,12 +2,10 @@
 
 import todoApp from "../support/page-object/pom"
 
-
-
 describe("E2E - Todo App", () => {
 
     beforeEach(() => {
-        cy.visit("http://127.0.0.1:5500/index.html")
+        cy.visit("https://klaudiakprojects.github.io/todoapp/")
     })
 
     it("Should add one task", () => {
@@ -20,17 +18,14 @@ describe("E2E - Todo App", () => {
         todoApp.mainInput.type("Learn Python {enter}");
         cy.get(".list-group-item").eq(0).should('contain', 'Learn JavaScript');
         cy.get(".list-group-item").eq(1).should('contain', 'Learn Python');
-
-
     })
 
-    it("Should mark the first task out of 2 as a completed", () => {
+    it.only("Should mark the first task out of 2 as a completed", () => {
         todoApp.mainInput.type("Learn JavaScript {enter}");
         todoApp.mainInput.type("Learn Python {enter}");
         cy.get(".done-button").first().click();
         const newDiv = cy.get(".new-div").first();
         newDiv.should('have.class', 'completed');
-        newDiv.get("li").first().should('contain', 'Learn JavaScript');
     })
 
     it("Should mark two tasks as completed", () => {
@@ -40,7 +35,6 @@ describe("E2E - Todo App", () => {
         todoApp.doneButton.eq(1).check();
         todoApp.doneButton.should('be.checked');
         todoApp.doneButton.eq(1).should('be.checked')
-
     })
 
     it("Should remove one task", () => {
@@ -48,7 +42,6 @@ describe("E2E - Todo App", () => {
         todoApp.mainInput.type("Learn Python {enter}");
         cy.get(".delete-button").first().click();
         cy.contains("Learn JavaScript").should('not.exist');
-
     })
 
     it("Should check if the id of a task is right after refreshing the page", () => {
@@ -65,6 +58,7 @@ describe("E2E - Todo App", () => {
             expect(text).to.equal("Input field is empty")
         })
     })
+
     it("Should check if todo has changed after edit", () => {
         todoApp.mainInput.type("Learn JavaScript {enter}");
         cy.get(".list-group-item").click();

@@ -1,7 +1,10 @@
 let newTodo = document.getElementById("newTodo");
 let addNewTodo = document.getElementById("addNewTodo");
 let allTodos = document.getElementById("allTodos");
-let todos = [];
+const completedTasks = document.getElementById("done-todos");
+const totalTasks = document.getElementById("all-todos");
+const remainingTasks = document.getElementById("pending-todos");
+const todos = [];
 
 addNewTodo.addEventListener("click", () => {
     if (newTodo.value === "") {
@@ -10,7 +13,7 @@ addNewTodo.addEventListener("click", () => {
     }
     addTodo(newTodo.value, "pending")
     localStorage.setItem("all-todos", JSON.stringify(todos));
-
+    statsUpdate()
 })
 
 let existingTodos = JSON.parse(localStorage.getItem("all-todos"));
@@ -24,13 +27,9 @@ existingTodos.forEach(todo => {
 
 
 function addTodo(name, status) {
-    
+
     let todoName = name;
-
-
     let todoDetails = { name: todoName, status: status };
-
-
 
     newDiv = document.createElement("div");
     newDiv.setAttribute("class", "new-div");
@@ -48,7 +47,7 @@ function addTodo(name, status) {
     deleteButton.setAttribute("class", "delete-button ml-auto p-2 col-sm");
     deleteButton.innerText = "DELETE";
     newDiv.appendChild(deleteButton);
-
+    statsUpdate()
 
     todos.push(todoDetails);
     newTodo.value = "";
@@ -60,7 +59,7 @@ function addTodo(name, status) {
     deleteButton.addEventListener("click", deleteTodo);
     newLi.addEventListener("click", todoEdit);
 
-
+    statsUpdate()
 
 }
 
@@ -80,7 +79,7 @@ function doneTodo(e) {
 
     localStorage.setItem("all-todos", JSON.stringify(todos));
 
-
+    statsUpdate()
 }
 
 
@@ -96,12 +95,12 @@ function deleteTodo(e) {
     localStorage.setItem("all-todos", JSON.stringify(todos))
 
     item.parentElement.remove();
+    statsUpdate()
 
     for (let todoId = 0; todoId < todos.length; todoId++) {
         allTodos.getElementsByClassName("new-div")[todoId].id = todoId;
 
     }
-
 }
 
 newTodo.addEventListener("keypress", function onEvent(event) {
@@ -114,9 +113,8 @@ newTodo.addEventListener("keypress", function onEvent(event) {
         localStorage.setItem("all-todos", JSON.stringify(todos));
 
     }
+    statsUpdate()
 })
-
-
 
 function todoEdit(e) {
     let item = e.target.parentElement;
@@ -140,6 +138,18 @@ function todoEdit(e) {
 
         }
     })
+}
 
+function statsUpdate() {
+    let completedTodos = todos.filter(todo => {
+        return todo.status === "completed";
+    });
+    let completedTodosLength = completedTodos.length;
+    completedTasks.innerHTML = "Completed: " + completedTodosLength;
+    let totalTodos = todos.length;
+    totalTasks.innerHTML = "Total: " + totalTodos;
+
+    let remainingTodos = totalTodos - completedTodosLength;
+    remainingTasks.innerHTML = "Remaining: " + remainingTodos;
 
 }
