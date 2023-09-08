@@ -20,7 +20,7 @@ describe("E2E - Todo App", () => {
         cy.get(".list-group-item").eq(1).should('contain', 'Learn Python');
     })
 
-    it.only("Should mark the first task out of 2 as a completed", () => {
+    it("Should mark the first task out of 2 as a completed", () => {
         todoApp.mainInput.type("Learn JavaScript {enter}");
         todoApp.mainInput.type("Learn Python {enter}");
         cy.get(".done-button").first().click();
